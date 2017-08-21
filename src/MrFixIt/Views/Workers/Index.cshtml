@@ -1,24 +1,45 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-
-
-@if (User.Identity.IsAuthenticated)
+﻿@if (User.Identity.IsAuthenticated)
 {
 
     <div class="text-center">
-        <h4>Hello Worker @Model.FirstName @Model.LastName. You are Logged In</h4>
+        <h2>Hello @Model.FirstName @Model.LastName. You are Logged In</h2>
         <h3>Your Current Jobs:</h3>
         @foreach (var Job in Model.Jobs)
         {
-            <h5>@Job.Title</h5>
+            <h4>@Job.Title</h4>
+            <div class="@Job.JobId">Start work on @Job.Title</div>
+            <div id="@Job.JobId"></div>
+            <div class="@Job.JobId-2">Finish @Job.Title</div>
+            <div id="@Job.JobId-2"></div>
 
+<script>
+$('.@Job.JobId').click(function () {
+    $.ajax({
+        type: 'GET',
+        dataType: 'html',
+        url: '@Url.Action("JobPending")',
+        data: {id : @Job.JobId},
+        success: function (result) {
+            $('#@Job.JobId').html(result);
+        }
+    });
+});
+$('.@Job.JobId-2').click(function () {
+    $.ajax({
+        type: 'GET',
+        dataType: 'html',
+        url: '@Url.Action("JobComplete")',
+        data: {id : @Job.JobId},
+        success: function (result) {
+            $('#@Job.JobId-2').html(result);
+        }
+    });
+});
+</script>
         }
         @if (Model.Avaliable)
         {
-            <h2>Please @Html.ActionLink("select a job", "Index", "Jobs").</h2>
+            <h4>Please @Html.ActionLink("select a job", "Index", "Jobs").</h4>
         }
         else
         {
