@@ -1,31 +1,35 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-<div class="text-center">
+﻿<div class="text-center">
     <h3>Our Current Jobs</h3>
     @Html.ActionLink("Add a new job", "Create")
 </div>
 @foreach (var Job in Model)
 {
-    <ul>
-        <li>@Job.Title</li>
-        <ul>
-            <li>@Job.Description</li>
-        </ul>
-        @if (Job.Worker == null)
-        {
-        <button class="claimJobButton" value="@Job.JobId">Claim job </button>
+  
+    <h2>@Job.Title</h2>
+    <p>@Job.Description</p>
+    @if (Job.Worker == null)
+    {  
+        <div id="@Job.JobId">This job is unclaimed</div>
+        
+        <div class="@Job.JobId">Claim this job</div>
+    }
+    else
+    {
+        <p>
+            Claimed by @Job.Worker.FirstName @Job.Worker.LastName
+        </p>
+    }
+<script>
+$('.@Job.JobId').click(function () {
+    $.ajax({
+        type: 'GET',
+        dataType: 'html',
+        url: '@Url.Action("Claim")',
+        data: {id : @Job.JobId},
+        success: function (result) {
+            $('#@Job.JobId').html(result);
         }
-        else
-        {
-            <li class="btn">This Job is claimed by @Job.Worker.FirstName @Job.Worker.LastName</li>
-        }
-    </ul>
-    <div id="ShowClaimForm"></div>
-
-
-    <hr />
+    });
+});
+</script>
 }
-

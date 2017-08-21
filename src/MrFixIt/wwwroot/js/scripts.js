@@ -1,19 +1,33 @@
-﻿$(document).ready(function () {
-    $('.claimJobButton').click(function(){
-        var jobId = $('.claimJobButton').val();
-        console.log(typeof (jobId));
-        console.log(jobId);
-        var claimedJobId = parseInt(jobId);
-        console.log(claimedJobId)
-    event.preventDefault();
-        $.ajax({
-            type: 'GET',
-            data: {id: claimedJobId},
-            dataType: 'html',
-            url: '@Url.Action("Claim")',
-            success: function (result) {
-                $('#ShowClaimForm').html(result);
-            }
-        });
-    });
-});
+﻿//$(document).ready(function () {
+//    //$('.claim-job').submit(function(){
+//    //    event.preventDefault();
+//    //    //var jobId = $(this).val();
+//    //    //console.log(jobId);
+//    //    //console.log(typeof (jobId));
+//    //    //var claimedJobId = parseInt(jobId);
+//    //    //console.log(claimedJobId)
+//    //    $.ajax({
+//    //        url: '@Url.Action("ClaimJob")',
+//    //        type: 'POST',
+//    //        dataType: 'json',
+//    //        data: $(this).serialize(),
+//    //        success: function (result) {
+//    //            var claimedMessage = 'You claimed' + result.Title;
+//    //            $('#claimedMessage').html(claimedMessage);
+//    //        }
+//    //    });
+//    //});
+//<script>
+//$('.@Job.JobId').click(function () {
+//    $.ajax({
+//        type: 'GET',
+//        dataType: 'html',
+//        url: '@Url.Action("Claim")',
+//        data: {id : @Job.JobId},
+//        success: function (result) {
+//            $('#@Job.JobId').html(result);
+//        }
+//    });
+//});
+//</script>
+//});
